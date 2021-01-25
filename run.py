@@ -5,6 +5,6 @@
 # Copyright © Relarizky 2021
 
 
-from app import app
+from app import apps
 
-app.run()
+apps.run()
