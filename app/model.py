@@ -1,7 +1,7 @@
 # Author    : Relarizky
 # Github    : https://github.com/relarizky
 # File Name : app/model.py
-# Last Modified  : 01/25/21, 11:23 PM
+# Last Modified  : 01/25/21, 11:31 PM
 # Copyright © Relarizky 2021
 
 
@@ -10,6 +10,7 @@ from datetime import datetime
 from flask_login import UserMixin
 
 from help.database import DBHelper, create_uuid
+from help.setter.order_setter import OrderSetter
 from help.setter.admin_setter import AdminSetter
 from help.setter.member_setter import MemberSetter
 from help.setter.product_setter import ProductSetter
@@ -90,7 +91,7 @@ class Product(db.Model, DBHelper, ProductSetter):
         self.picture = picture
 
 
-class Order(db.Model, DBHelper):
+class Order(db.Model, DBHelper, OrderSetter):
     """
     represents tb_order
     """
