@@ -1,7 +1,7 @@
 # Author    : Relarizky
 # Github    : https://github.com/relarizky
 # File Name : app/__init__.py
-# Last Modified  : 01/26/21, 11:30 PM
+# Last Modified  : 01/26/21, 09:44 PM
 # Copyright © Relarizky 2021
 
 
@@ -13,7 +13,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 
 # create flask instance
-apps = Flask(__name__)
+apps = Flask(__name__, static_folder="../asset/")
 apps.config.from_pyfile("configuration.py")
 
 
