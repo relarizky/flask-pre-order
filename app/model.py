@@ -1,13 +1,14 @@
 # Author    : Relarizky
 # Github    : https://github.com/relarizky
 # File Name : app/model.py
-# Last Modified  : 01/26/21, 11:30 PM
+# Last Modified  : 01/26/21, 23:50 PM
 # Copyright © Relarizky 2021
 
 
 from app import sql as db
 from datetime import datetime
 from flask_login import UserMixin
+from help.hash import create_sha224
 from help.database import DBHelper, create_uuid
 from help.exception import ObjectDoesNotExist
 
@@ -36,6 +37,13 @@ class Admin(db.Model, UserMixin, DBHelper, AdminSetter):
         self.set_user_name(username)
         self.set_pass_word(password)
 
+    def check_password(self, pass_word: str) -> bool:
+        """
+        validate user given pass word
+        """
+
+        return create_sha224(pass_word) == self.pass_word
+
 
 class Member(db.Model, UserMixin, DBHelper, MemberSetter):
     """
@@ -59,6 +67,13 @@ class Member(db.Model, UserMixin, DBHelper, MemberSetter):
         self.set_pass_word(password)
         self.set_phone_number(phone)
         self.set_email_address(email)
+
+    def check_password(self, pass_word: str) -> bool:
+        """
+        validate user given pass word
+        """
+
+        return create_sha224(pass_word) == self.pass_word
 
 
 class Category(db.Model, DBHelper, CategorySetter):
