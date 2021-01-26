@@ -25,7 +25,7 @@ MYSQL = f"mysql://{USER_NAME}:{PASS_WORD}@{HOST_NAME}/{DATA_BASE}"
 
 # SQLite Credentials
 FILE_NAME = environ.get("FILE_NAME")
-SQLITE = f"sqlite:////{FILE_NAME}"
+SQLITE = f"sqlite:///{FILE_NAME}"
 
 
 # SQLAlchemy Configuration
