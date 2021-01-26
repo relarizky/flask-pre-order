@@ -1,12 +1,10 @@
 # Author    : Relarizky
 # Github    : https://github.com/relarizky
 # File Name : help/uploader.py
-# Last Modified  : 01/25/21, 11:23 PM
+# Last Modified  : 01/26/21, 11:30 PM
 # Copyright © Relarizky 2021
 
 
-from os import getcwd
-from app import apps
 from typing import Union
 from help.hash import create_md5
 from werkzeug.utils import secure_filename
@@ -21,7 +19,7 @@ class FileUploader:
     @staticmethod
     def filter_extension(file_name: str) -> bool:
         """
-        fileter file name extension
+        filter file name extension
         """
 
         ext = file_name.split(".")[-1].lower()
@@ -33,7 +31,6 @@ class FileUploader:
         """
         create hash file name
         """
-
 
         file_name, file_ext = file_name.split(".")
         file_name = create_md5(file_name)

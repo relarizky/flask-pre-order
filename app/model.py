@@ -1,15 +1,16 @@
 # Author    : Relarizky
 # Github    : https://github.com/relarizky
 # File Name : app/model.py
-# Last Modified  : 01/25/21, 11:31 PM
+# Last Modified  : 01/26/21, 11:30 PM
 # Copyright © Relarizky 2021
 
 
 from app import sql as db
 from datetime import datetime
 from flask_login import UserMixin
-
 from help.database import DBHelper, create_uuid
+from help.exception import ObjectDoesNotExist
+
 from help.setter.order_setter import OrderSetter
 from help.setter.admin_setter import AdminSetter
 from help.setter.member_setter import MemberSetter
@@ -67,9 +68,10 @@ class Category(db.Model, DBHelper, CategorySetter):
 
     id = db.Column(db.String(5), primary_key=True, default=create_uuid())
     name = db.Column(db.String(20), nullable=False, unique=True)
+    product = db.relationship("Product", backref="category", lazy="dynamic")
 
     def __init__(self, name: str) -> None:
-        self.name = name
+        self.set_name(name)
 
 
 class Product(db.Model, DBHelper, ProductSetter):
@@ -84,11 +86,24 @@ class Product(db.Model, DBHelper, ProductSetter):
     name = db.Column(db.String(25), nullable=False)
     price = db.Column(db.Integer, default=0)
     picture = db.Column(db.String(36), default="unknown.jpg")
+    order = db.relationship("Order", backref="product", lazy="dynamic")
 
     def __init__(self, name: str, price: int, picture: str = None) -> None:
-        self.name = name
-        self.price = price
-        self.picture = picture
+        self.set_name(name)
+        self.set_price(price)
+        self.set_picture(picture)
+
+    def set_object_category(self, id_category: str) -> None:
+        """
+        set category by its id
+        """
+
+        category = Category.query.get(id_category)
+
+        if category is None:
+            raise ObjectDoesNotExist("kategori tidak ditemukan")
+
+        self.category = category
 
 
 class Order(db.Model, DBHelper, OrderSetter):
@@ -106,10 +121,31 @@ class Order(db.Model, DBHelper, OrderSetter):
     payment_proof = db.Column(db.String(36), default="unknown.jpg")
     ordered_on = db.Column(db.Date, default=datetime.now())
 
-    def __init__(self, member: Member, product: Product,
-                 pieces: int, paid_off: bool, payment_proof: str) -> None:
+    def __init__(self, pieces: int, paid_off: bool, payment_proof: str) -> None:
+        self.set_pieces(pieces)
+        self.set_paid_off(paid_off)
+        self.set_payment_proof(payment_proof)
+
+    def set_object_member(self, member_id: str) -> None:
+        """
+        set order member
+        """
+
+        member = Member.query.get(member_id)
+
+        if member is None:
+            raise ObjectDoesNotExist("member tidak dikenal")
+
         self.member = member
+
+    def set_object_product(self, product_id: str) -> None:
+        """
+        set product by its id
+        """
+
+        product = Product.query.get(product_id)
+
+        if product is None:
+            raise ObjectDoesNotExist("produk tidak ditemukan")
+
         self.product = product
-        self.pieces = pieces
-        self.paid_off = paid_off
-        self.payment_proof = payment_proof

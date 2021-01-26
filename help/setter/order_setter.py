@@ -1,14 +1,13 @@
 # Author    : Relarizky
 # Github    : https://github.com/relarizky
 # File Name : help/setter/order_setter.py
-# Last Modified  : 01/25/21, 11:23 PM
+# Last Modified  : 01/26/21, 11:30 PM
 # Copyright © Relarizky 2021
 
 
 from app import apps
-from app.model import Member, Product
 from help.uploader import FileUploader
-from help.exception import ValueLengthError, ObjectDoesNotExist, ValueFormatError
+from help.exception import ValueFormatError
 from werkzeug.datastructures import FileStorage
 
 
@@ -16,25 +15,6 @@ class OrderSetter(FileUploader):
     """
     contains setter for Order (tb_order) with validation
     """
-
-    def set_member(self, current_member: Member) -> None:
-        """
-        set member
-        """
-
-        self.member = current_member
-
-    def set_product(self, product_id: str) -> None:
-        """
-        set product by its id
-        """
-
-        product = Product.query.get(product_id)
-
-        if product is None:
-            raise ObjectDoesNotExist("produk tidak ditemukan")
-
-        self.product = product
 
     def set_pieces(self, pieces: int) -> None:
         """

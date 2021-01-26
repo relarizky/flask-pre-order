@@ -1,11 +1,11 @@
 # Author    : Relarizky
 # Github    : https://github.com/relarizky
 # File Name : app/__init__.py
-# Last Modified  : 01/25/21, 11:23 PM
+# Last Modified  : 01/26/21, 11:30 PM
 # Copyright © Relarizky 2021
 
 
-from flask import Flask, request
+from flask import Flask
 from flask_wtf.csrf import CSRFProtect
 from flask_login import LoginManager
 from flask_migrate import Migrate
