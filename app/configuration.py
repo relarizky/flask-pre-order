@@ -1,7 +1,7 @@
 # Author    : Relarizky
 # Github    : https://github.com/relarizky
 # File Name : app/configuration.py
-# Last Modified  : 01/24/21, 04:28 PM
+# Last Modified  : 01/27/21, 10:27 AM
 # Copyright © Relarizky 2021
 
 
@@ -11,8 +11,8 @@ from os import environ, getcwd
 # Flask App Configuration
 SECRET_KEY = environ.get("SECRET_KEY")
 FLASK_DBMS = environ.get("FLASK_DBMS").lower()
-PROOF_IMAGE_DIR = getcwd() + "/route/index/asset/picture/proof/"
-PRODUCT_IMAGE_DIR = getcwd() + "/route/index/asset/picture/product/"
+PROOF_IMAGE_DIR = getcwd() + "/asset/picture/proof/"
+PRODUCT_IMAGE_DIR = getcwd() + "/asset/picture/product/"
 
 
 # MySQL Credentials
