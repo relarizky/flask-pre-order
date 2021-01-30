@@ -1,7 +1,7 @@
 # Author    : Relarizky
 # Github    : https://github.com/relarizky
 # File Name : app/model.py
-# Last Modified  : 01/26/21, 23:50 PM
+# Last Modified  : 01/30/21, 14:00 PM
 # Copyright © Relarizky 2021
 
 
@@ -9,8 +9,8 @@ from app import sql as db
 from datetime import datetime
 from flask_login import UserMixin
 from help.hash import create_sha224
-from help.database import DBHelper, create_uuid
 from help.exception import ObjectDoesNotExist
+from help.app.database import DBHelper, create_uuid
 
 from help.setter.order_setter import OrderSetter
 from help.setter.admin_setter import AdminSetter
@@ -58,6 +58,7 @@ class Member(db.Model, UserMixin, DBHelper, MemberSetter):
     pass_word = db.Column(db.String(56), nullable=False)
     phone = db.Column(db.String(12), nullable=False, unique=True)
     email = db.Column(db.String(40), nullable=False, unique=True)
+    verified = db.Column(db.Boolean, default=False)
 
     def __init__(self, realname: str, username: str,
                  password: str, phone: str, email: str) -> None:
@@ -140,7 +141,8 @@ class Order(db.Model, DBHelper, OrderSetter):
     payment_proof = db.Column(db.String(36), default="unknown.jpg")
     ordered_on = db.Column(db.Date, default=datetime.now())
 
-    def __init__(self, pieces: int, paid_off: bool, payment_proof: str) -> None:
+    def __init__(self, pieces: int,
+                 paid_off: bool, payment_proof: str) -> None:
         self.id = create_uuid()
         self.set_pieces(pieces)
         self.set_paid_off(paid_off)

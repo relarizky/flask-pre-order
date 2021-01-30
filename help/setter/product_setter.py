@@ -1,13 +1,13 @@
 # Author    : Relarizky
 # Github    : https://github.com/relarizky
 # File Name : help/setter/product_setter.py
-# Last Modified  : 01/26/21, 11:30 PM
+# Last Modified  : 01/27/21, 21:58 PM
 # Copyright © Relarizky 2021
 
 
 from app import apps
-from help.uploader import FileUploader
 from help.exception import ValueLengthError, ValueFormatError
+from help.app.uploader import FileUploader
 from werkzeug.datastructures import FileStorage
 
 
