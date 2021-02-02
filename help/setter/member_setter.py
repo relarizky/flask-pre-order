@@ -1,7 +1,7 @@
 # Author    : Relarizky
 # Github    : https://github.com/relarizky
 # File Name : help/setter/member_setter.py
-# Last Modified  : 01/25/21, 11:23 PM
+# Last Modified  : 02/02/21, 11:34 PM
 # Copyright © Relarizky 2021
 
 
@@ -40,10 +40,12 @@ class MemberSetter:
         set pass word
         """
 
-        if pass_word.__len__() < 8:
-            raise ValueLengthError("pass word harus lebih dari 8")
+        if not bool(pass_word) is False:
+            # pass_word is not empty
+            if pass_word.__len__() < 8:
+                raise ValueLengthError("pass word harus lebih dari 8")
 
-        self.pass_word = create_sha224(pass_word)
+            self.pass_word = create_sha224(pass_word)
 
     def set_phone_number(self, phone: str) -> None:
         """
