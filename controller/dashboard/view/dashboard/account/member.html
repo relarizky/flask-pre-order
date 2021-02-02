@@ -1,0 +1,73 @@
+{% extends 'dashboard.html' %}
+
+{% block header %}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Member</h1>
+</div>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        Member List
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="userTable" width="100%" cellspacing="0">
+                <thead class="text-center">
+                    <tr>
+                        <th> REAL NAME </th>
+                        <th> USER NAME </th>
+                        <th> PHONE </th>
+                        <th> EMAIL </th>
+                        <th> VERIFIED </th>
+                        <th> ACTION </th>
+                    </tr>
+                </thead>
+                <tfoot class="text-center">
+                    <tr>
+                        <th> REAL NAME </th>
+                        <th> USER NAME </th>
+                        <th> PHONE </th>
+                        <th> EMAIL </th>
+                        <th> VERIFIED </th>
+                        <th> ACTION </th>
+                    </tr>
+                </tfoot>
+                <tbody class="text-center">
+                {% for user in user_list %}
+                    <tr>
+                        <td> {{user.real_name|pascal_case}} </td>
+                        <td> {{user.user_name}} </td>
+                        <td> {{user.phone}} </td>
+                        <td> {{user.email}} </td>
+                        <td>
+                        {% if user.verified %}
+                            <i class="text-success fa fa-check"></i>
+                        {% else %}
+                            <i class="text-danger fa fa-times"</i>
+                        {% endif %}
+                        </td>
+                        <td>
+                        {% if user.id == current_user.id %}
+                            <a href="#" class="btn btn-danger btn-circle btn-sm disabled" title="delete">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        {% else %}
+                            <a href="{{url_for('dashboard.member_delete', id=user.id)}}" class="btn btn-danger btn-circle btn-sm" title="delete">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,134 @@
+{% extends 'dashboard.html' %}
+
+{% block header %}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Admin</h1>
+</div>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <button class="btn btn-success" data-toggle="modal" data-target="#addAdmin" title="tambah admin">
+          <i class="fa fa-user-plus"> Tambah Admin </i>
+        </button>
+        <div class="modal fade" id="addAdmin" tabindex="-1" role="dialog" aria-labelledby="addAdminModal" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Tambah Admin</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form action='{{url_for("dashboard.admin_add")}}' method='POST'>
+                    <div class="form-group">
+                      <label for="real-name" class="col-form-label"> Real name: </label>
+                      <input type="text" name="real_name" class="form-control" id="real-name" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="user-name" class="col-form-label"> User name: </label>
+                      <input type="text" name="user_name" class="form-control" id="user-name" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="pass-word" class="col-form-label"> Pass word: </label>
+                      <input type="password" name="pass_word" class="form-control" id="pass-word" required>
+                    </div>
+                    <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+                    <input id="addAdminButton" type="submit" style="display: none;">
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+                  <button onclick="document.getElementById('addAdminButton').click();" type="button" class="btn btn-sm btn-success text-white-50">Submit</button>
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="userTable" width="100%" cellspacing="0">
+                <thead class="text-center">
+                    <tr>
+                        <th> REAL NAME </th>
+                        <th> USER NAME </th>
+                        <th> ACTION </th>
+                    </tr>
+                </thead>
+                <tfoot class="text-center">
+                    <tr>
+                        <th> REAL NAME </th>
+                        <th> USER NAME </th>
+                        <th> ACTION </th>
+                    </tr>
+                </tfoot>
+                <tbody class="text-center">
+                {% for user in user_list %}
+                    <tr>
+                        <td> {{user.real_name|pascal_case}} </td>
+                        <td> {{user.user_name}} </td>
+                        <td>
+                        {% if user.id == current_user.id %}
+                            <a href="#" class="btn btn-warning btn-circle btn-sm disabled" title="edit">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                            <a href="#" class="btn btn-danger btn-circle btn-sm disabled" title="delete">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        {% else %}
+                            <a href="#" class="btn btn-warning btn-circle btn-sm" data-toggle="modal" data-target="#exampleModal{{user.id}}" title="edit">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                            <a href="{{url_for('dashboard.admin_delete', id=user.id)}}" class="btn btn-danger btn-circle btn-sm" title="delete">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        {% endif %}
+                        </td>
+                    </tr>
+                    <div class="modal fade" id="exampleModal{{user.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Edit Admin</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <form action='{{url_for("dashboard.admin_edit", id=user.id)}}' method='POST'>
+                                <div class="form-group">
+                                  <label for="real-name" class="col-form-label"> Real name: </label>
+                                  <input type="text" name="real_name" value="{{user.real_name}}" class="form-control" id="real-name" required>
+                                </div>
+                                <div class="form-group">
+                                  <label for="user-name" class="col-form-label"> User name: </label>
+                                  <input type="text" name="user_name" value="{{user.user_name}}" class="form-control" id="user-name" required>
+                                </div>
+                                <div class="form-group">
+                                  <label for="pass-word" class="col-form-label"> Pass word: </label>
+                                  <input type="password" name="pass_word" class="form-control" id="pass-word">
+                                </div>
+                                <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+                                <input id="mainButton{{user.id}}" type="submit" style="display: none;">
+                              </form>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+                              <button onclick="document.getElementById('mainButton{{user.id}}').click();" type="button" class="btn btn-sm btn-success text-white-50">Submit</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
