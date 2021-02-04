@@ -83,22 +83,13 @@
             </div>
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseField"
-                    aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Product</span>
-                </a>
-                <div id="collapseField" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{url_for('dashboard.product')}}">Daftar Product</a>
-                        <a class="collapse-item" href="#">Tambah Product</a>
-                    </div>
-                </div>
+              <a class="nav-link" href="{{url_for('dashboard.product')}}">
+                  <i class="fas fa-fw fa-table"></i>
+                  <span>Product</span></a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="tables.html">
+                <a class="nav-link" href="{{url_for('dashboard.category')}}">
                     <i class="fas fa-fw fa-tag"></i>
                     <span>Kategori</span></a>
             </li>

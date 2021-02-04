@@ -38,7 +38,7 @@
                       <label for="product-category" class="col-form-label"> Product Category: </label>
                       <select name="category" class="form-control">
                       {% for category in categories %}
-                          <option value="{{category.id}}">{{category.name}}</option>
+                          <option value="{{category.id}}">{{category.name|pascal_case}}</option>
                       {% endfor %}
                       </select>
                     </div>
@@ -88,7 +88,7 @@
                         </td>
                         <td> {{product.name}} </td>
                         <td> {{product.price|rupiah}} </td>
-                        <td> {{product.category.name}} </td>
+                        <td> {{product.category.name|pascal_case}} </td>
                         <td>
                           <a href="#" class="btn btn-sm btn-circle btn-warning" data-toggle="modal" data-target="#editProduct{{product.id}}" title="edit">
                             <i class="fa fa-edit"></i>
