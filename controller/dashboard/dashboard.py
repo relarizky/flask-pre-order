@@ -1,7 +1,7 @@
 # Author    : Relarizky
 # Github    : https://github.com/relarizky
 # File Name : controller/dashboard/dashboard.py
-# Last Modified  : 02/02/21, 01:13 PM
+# Last Modified  : 02/04/21, 03:21 PM
 # Copyright © Relarizky 2021
 
 
@@ -17,6 +17,11 @@ dashboard_bp = Blueprint(
     __name__,
     template_folder="view/"
 )
+
+
+import controller.dashboard.account
+import controller.dashboard.product
+import controller.dashboard.order
 
 
 @dashboard_bp.route("/")

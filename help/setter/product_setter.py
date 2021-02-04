@@ -1,7 +1,7 @@
 # Author    : Relarizky
 # Github    : https://github.com/relarizky
 # File Name : help/setter/product_setter.py
-# Last Modified  : 01/27/21, 21:58 PM
+# Last Modified  : 02/04/21, 03:21 PM
 # Copyright © Relarizky 2021
 
 
@@ -46,7 +46,5 @@ class ProductSetter(FileUploader):
             apps.config.get("PRODUCT_IMAGE_DIR")
         )
 
-        if file_name is None:
-            raise ValueFormatError("ekstensi gambar tidak valid")
-
-        self.picture = file_name
+        if file_name is not None:
+            self.picture = file_name

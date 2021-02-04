@@ -1,0 +1,24 @@
+{%- macro alert_pop_up() %}
+  {% set messages = get_flashed_messages(with_categories = True) %}
+  {% if messages %}
+    {% for message, category in messages %}
+      {% if category == 'error' %}
+          <script>
+              Swal.fire({
+                  title: "Error!",
+                  text: "{{message}}",
+                  icon: "error"
+              });
+          </script>
+      {% else %}
+          <script>
+              Swal.fire({
+                  title: "Success!",
+                  text: "{{message}}",
+                  icon: "success"
+              });
+          </script>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+{% endmacro -%}
