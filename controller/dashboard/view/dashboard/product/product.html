@@ -65,6 +65,7 @@
                         <th> PICTURE </th>
                         <th> NAME </th>
                         <th> PRICE </th>
+                        <th> STATUS </th>
                         <th> CATEGORY </th>
                         <th> ACTION </th>
                     </tr>
@@ -74,6 +75,7 @@
                         <th> PICTURE </th>
                         <th> NAME </th>
                         <th> PRICE </th>
+                        <th> STATUS </th>
                         <th> CATEGORY </th>
                         <th> ACTION </th>
                     </tr>
@@ -88,6 +90,13 @@
                         </td>
                         <td> {{product.name}} </td>
                         <td> {{product.price|rupiah}} </td>
+                        <td>
+                        {% if product.ready %}
+                          <i class="fa fa-check text-success"></i>
+                        {% else %}
+                          <i class="fa fa-times text-danger"></i>
+                        {% endif %}
+                        </td>
                         <td> {{product.category.name|pascal_case}} </td>
                         <td>
                           <a href="#" class="btn btn-sm btn-circle btn-warning" data-toggle="modal" data-target="#editProduct{{product.id}}" title="edit">
@@ -116,6 +125,18 @@
                               <div class="form-group">
                                 <label for="product-price" class="col-form-label"> Product Price: </label>
                                 <input type="text" name="price" value="{{product.price}}" class="form-control" id="price" required>
+                              </div>
+                              <div class="form-group">
+                                <label for="product-status" class="col-form-label"> Product Status : </label>
+                                <select name="status" class="form-control">
+                                {% if product.ready %}
+                                  <option value="1" selected>Ready</option>
+                                  <option value="">Not Ready</option>
+                                {% else %}
+                                  <option value="" selected>Not Ready</option>
+                                  <option value="1">Ready</option>
+                                {% endif %}
+                                </select>
                               </div>
                               <div class="form-group">
                                 <label for="product-category" class="col-form-label"> Product Category: </label>

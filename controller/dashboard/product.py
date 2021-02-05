@@ -1,7 +1,7 @@
 # Author    : Relarizky
 # Github    : https://github.com/relarizky
 # File Name : controller/dashboard/product.py
-# Last Modified  : 02/04/21, 03:20 PM
+# Last Modified  : 02/05/21, 16:37 PM
 # Copyright © Relarizky 2021
 
 
@@ -78,12 +78,14 @@ def product_edit(id: str):
 
     name = request.form.get("name")
     price = request.form.get("price")
+    status = request.form.get("status")
     picture = request.files.get("picture")
     category = request.form.get("category")
 
     try:
         product.set_name(name)
         product.set_price(price)
+        product.set_status(status)
         product.set_picture(picture)
         product.set_object_category(category)
         product.save()

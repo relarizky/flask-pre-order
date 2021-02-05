@@ -1,7 +1,7 @@
 # Author    : Relarizky
 # Github    : https://github.com/relarizky
 # File Name : help/setter/product_setter.py
-# Last Modified  : 02/04/21, 03:21 PM
+# Last Modified  : 02/05/21, 16:37 PM
 # Copyright © Relarizky 2021
 
 
@@ -35,6 +35,13 @@ class ProductSetter(FileUploader):
             raise ValueFormatError("harga harus dalam bentuk angka")
 
         self.price = int(price)
+
+    def set_status(self, status: str) -> None:
+        """
+        set product status
+        """
+
+        self.ready = bool(status)
 
     def set_picture(self, picture: FileStorage) -> None:
         """

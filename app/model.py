@@ -1,7 +1,7 @@
 # Author    : Relarizky
 # Github    : https://github.com/relarizky
 # File Name : app/model.py
-# Last Modified  : 01/30/21, 14:00 PM
+# Last Modified  : 02/05/21, 16:37 PM
 # Copyright © Relarizky 2021
 
 
@@ -105,6 +105,7 @@ class Product(db.Model, DBHelper, ProductSetter):
     name = db.Column(db.String(25), nullable=False)
     price = db.Column(db.Integer, default=0)
     picture = db.Column(db.String(36), default="unknown.jpg")
+    ready = db.Column(db.Boolean, default=True)
     order = db.relationship("Order", backref="product", lazy="dynamic")
 
     def __init__(self, name: str, price: int, picture: str = None) -> None:
