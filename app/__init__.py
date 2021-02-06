@@ -1,7 +1,7 @@
 # Author    : Relarizky
 # Github    : https://github.com/relarizky
 # File Name : app/__init__.py
-# Last Modified  : 01/30/21, 14:00 PM
+# Last Modified  : 02/06/21, 13:21 PM
 # Copyright © Relarizky 2021
 
 
@@ -10,6 +10,7 @@ from flask_wtf.csrf import CSRFProtect
 from flask_mail import Mail
 from flask_login import LoginManager
 from flask_migrate import Migrate
+from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
 
 
@@ -19,6 +20,7 @@ apps.config.from_pyfile("configuration.py")
 
 
 # create additional library instance
+api = Api(apps, prefix="/api")
 sql = SQLAlchemy(apps)
 mail = Mail(apps)
 csrf = CSRFProtect(apps)

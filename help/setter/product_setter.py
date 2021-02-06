@@ -1,7 +1,7 @@
 # Author    : Relarizky
 # Github    : https://github.com/relarizky
 # File Name : help/setter/product_setter.py
-# Last Modified  : 02/05/21, 16:37 PM
+# Last Modified  : 02/06/21, 13:21 PM
 # Copyright © Relarizky 2021
 
 
@@ -21,8 +21,8 @@ class ProductSetter(FileUploader):
         set product name
         """
 
-        if name.__len__() > 25:
-            raise ValueLengthError("nama produk tidak bisa lebih dari 25")
+        if name.__len__() > 40:
+            raise ValueLengthError("nama produk tidak bisa lebih dari 40")
 
         self.name = name
 

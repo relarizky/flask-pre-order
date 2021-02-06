@@ -1,7 +1,7 @@
 # Author    : Relarizky
 # Github    : https://github.com/relarizky
 # File Name : app/model.py
-# Last Modified  : 02/05/21, 16:37 PM
+# Last Modified  : 02/06/21, 13:21 PM
 # Copyright © Relarizky 2021
 
 
@@ -59,6 +59,12 @@ class Member(db.Model, UserMixin, DBHelper, MemberSetter):
     phone = db.Column(db.String(12), nullable=False, unique=True)
     email = db.Column(db.String(40), nullable=False, unique=True)
     verified = db.Column(db.Boolean, default=False)
+    order = db.relationship(
+        "Order",
+        backref="member",
+        lazy="dynamic",
+        cascade="all, delete"
+    )
 
     def __init__(self, realname: str, username: str,
                  password: str, phone: str, email: str) -> None:
@@ -86,7 +92,12 @@ class Category(db.Model, DBHelper, CategorySetter):
 
     id = db.Column(db.String(5), primary_key=True)
     name = db.Column(db.String(20), nullable=False, unique=True)
-    product = db.relationship("Product", backref="category", lazy="dynamic")
+    product = db.relationship(
+        "Product",
+        backref="category",
+        lazy="dynamic",
+        cascade="all, delete"
+    )
 
     def __init__(self, name: str) -> None:
         self.id = create_uuid()
@@ -102,11 +113,16 @@ class Product(db.Model, DBHelper, ProductSetter):
 
     id = db.Column(db.String(5), primary_key=True)
     id_category = db.Column(db.String(5), db.ForeignKey("tb_category.id"))
-    name = db.Column(db.String(25), nullable=False)
+    name = db.Column(db.String(40), nullable=False)
     price = db.Column(db.Integer, default=0)
     picture = db.Column(db.String(36), default="unknown.jpg")
     ready = db.Column(db.Boolean, default=True)
-    order = db.relationship("Order", backref="product", lazy="dynamic")
+    order = db.relationship(
+        "Order",
+        backref="product",
+        lazy="dynamic",
+        cascade="all, delete"
+    )
 
     def __init__(self, name: str, price: int, picture: str = None) -> None:
         self.id = create_uuid()
