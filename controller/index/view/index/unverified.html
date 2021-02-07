@@ -1,0 +1,19 @@
+{% extends 'home.html' %}
+
+{% block content %}
+
+<div class="text-center" style="margin-top:15%">
+  <h3> Verifikasi akun anda! </h3>
+  <p align="justify text-center">
+    Akun anda sepertinya belum ter-verifikasi.
+    <br>
+    Check email anda untuk melihat url konfirmasi.
+    <br>
+    Klik tombol dibawah untuk mengirim ulang email, jika belum menerima email
+    dari kami
+    <br><br>
+    <a href="{{url_for('index.resend')}}" class="btn btn-success">Kirim Ulang Email</a>
+  </p>
+</div>
+
+{% endblock %}

@@ -1,7 +1,7 @@
 # Author    : Relarizky
 # Github    : https://github.com/relarizky
 # File Name : controller/index/index.py
-# Last Modified  : 02/05/21, 03:59 PM
+# Last Modified  : 02/07/21, 14:53 PM
 # Copyright © Relarizky 2021
 
 
@@ -32,6 +32,45 @@ def index(page: int = 1):
     products = Product.query.paginate(page, 6, True)
 
     return render_template("index/index.html", products=products)
+
+
+@index_bp.route("/search")
+@verified_required
+def search():
+    """
+    represents search page
+    """
+
+    query = request.args.get("name")
+    pages = request.args.get("page", 1, type=int)
+    products = Product.query.filter(
+        Product.name.like(f"%{query}%")
+    ).paginate(pages, 6, True)
+
+    return render_template(
+        "index/search.html",
+        query=query,
+        products=products
+    )
+
+
+@index_bp.route("/category/<id>")
+@verified_required
+def category(id: str):
+    """
+    represents category page
+    """
+
+    pages = request.args.get("page", 1, type=int)
+    products = Product.query.filter_by(
+        id_category=id
+    ).paginate(pages, 6, True)
+
+    return render_template(
+        "index/category.html",
+        category=id,
+        products=products
+    )
 
 
 @index_bp.route("/unverified")
