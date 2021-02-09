@@ -1,7 +1,7 @@
 # Author    : Relarizky
 # Github    : https://github.com/relarizky
 # File Name : app/model.py
-# Last Modified  : 02/06/21, 13:21 PM
+# Last Modified  : 02/09/21, 22:37 PM
 # Copyright © Relarizky 2021
 
 
@@ -154,16 +154,15 @@ class Order(db.Model, DBHelper, OrderSetter):
     id_member = db.Column(db.String(5), db.ForeignKey("tb_member.id"))
     id_product = db.Column(db.String(5), db.ForeignKey("tb_product.id"))
     pieces = db.Column(db.SmallInteger, default=0)
+    address = db.Column(db.Text)
     paid_off = db.Column(db.Boolean, default=False)
     payment_proof = db.Column(db.String(36), default="unknown.jpg")
     ordered_on = db.Column(db.Date, default=datetime.now())
 
-    def __init__(self, pieces: int,
-                 paid_off: bool, payment_proof: str) -> None:
+    def __init__(self, pieces: int, address: str) -> None:
         self.id = create_uuid()
         self.set_pieces(pieces)
-        self.set_paid_off(paid_off)
-        self.set_payment_proof(payment_proof)
+        self.set_address(address)
 
     def set_object_member(self, member_id: str) -> None:
         """
@@ -186,5 +185,8 @@ class Order(db.Model, DBHelper, OrderSetter):
 
         if product is None:
             raise ObjectDoesNotExist("produk tidak ditemukan")
+
+        if not product.ready:
+            raise Exception("produk sedang tidak ready")
 
         self.product = product

@@ -26,8 +26,48 @@
             </div>
             <div class="card-footer">
                 <p class="card-text text-center">
-                    <a href="#" data-toggle="modal" data-target="#bookingModal{{product.id}}" class="btn btn-warning">PRE-ORDER</a>
+                    <a href="#" data-toggle="modal" data-target="#preOrderModal{{product.id}}" class="btn btn-warning">PRE-ORDER</a>
                 </p>
+            </div>
+        </div>
+        <div class="modal fade" id="preOrderModal{{product.id}}" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="bookingModal{{product.id}}" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">PRE-ORDER</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body mb-0 p-0">
+                        <img src="{{product.picture|product_pict}}" style="height:250px; width:100%;" class="img-thumbnail" alt="{{product.name}}">
+                        <br>
+                        <form action="{{url_for('order.order_process', id=product.id)}}" class="user mb-2 p-2" method="POST">
+                            <div class="form-group">
+                                <label for="name" class="col-form-label">NAMA PRODUK : </label>
+                                <input type="text" value="{{product.name}}" class="form-control" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="address" class="col-form-label">ALAMAT PEMESAN : </label>
+                                <input type="text" name="address" class="form-control" id="datepicker" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="pieces" class="col-form-label">JUMLAH PESANAN : </label>
+                                <input type="number" name="pieces" value="1" class="form-control" id="timepicker" required>
+                            </div>
+                            <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+                            <input type="submit" name="submit" id="submit{{product.id}}" style="display:none;">
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    {% if current_user.is_authenticated and current_user.verified and product.ready %}
+                        <button type="button" class="btn btn-primary" onclick="document.getElementById('submit{{product.id}}').click();">Book</button>
+                    {% else %}
+                        <button type="button" class="btn btn-primary disabled" disabled>Book</button>
+                    {% endif %}
+                    </div>
+                </div>
             </div>
         </div>
     </div>

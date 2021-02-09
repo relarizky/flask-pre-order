@@ -46,8 +46,8 @@
                 <div class="nav-item dropdown">
                   <a href="#" data-toggle="dropdown" class="nav-item nav-link dropdown-toggle">Order</a>
                     <div class="dropdown-menu">
-                      <a href="#" class="dropdown-item">Sudah Lunas</a>
-                      <a href="#" class="dropdown-item">Belum Lunas</a>
+                      <a href="{{url_for('order.order_paid')}}" class="dropdown-item">Sudah Lunas</a>
+                      <a href="{{url_for('order.order_unpaid')}}" class="dropdown-item">Belum Lunas</a>
                     </div>
                 </div>
                 <a href="#" class="nav-item nav-link">User  </a>

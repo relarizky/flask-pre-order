@@ -1,7 +1,7 @@
 # Author    : Relarizky
 # Github    : https://github.com/relarizky
 # File Name : help/setter/order_setter.py
-# Last Modified  : 01/27/21, 21:58 PM
+# Last Modified  : 02/09/21, 22:37 PM
 # Copyright © Relarizky 2021
 
 
@@ -25,6 +25,13 @@ class OrderSetter(FileUploader):
             raise ValueFormatError("jumlah harus berupa angka")
 
         self.pieces = pieces
+
+    def set_address(self, address: str) -> None:
+        """
+        set address
+        """
+
+        self.address = address
 
     def set_paid_off(self, paid_off: bool) -> None:
         """

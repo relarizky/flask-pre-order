@@ -1,0 +1,43 @@
+{% extends 'home.html' %}
+
+{% block content %}
+
+<div class="card shadow mt-3">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">SUDAH LUNAS</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="fieldTable" width="100%" cellspacing="0">
+                <thead class="text-center">
+                    <tr>
+                        <th> BUKTI PEMBAYARAN </th>
+                        <th> PRODUK </th>
+                        <th> JUMLAH </th>
+                        <th> ALAMAT </th>
+                        <th> TANGGAL </th>
+                        <th> HARGA </th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                {% for order in order_list %}
+                    <tr>
+                        <td>
+                            <a href="{{order.payment_proof|proof_pict}}" data-toggle="lightbox">
+                                <img src="{{order.payment_proof|proof_pict}}" style="height:125px; width:100%;" class="rounded" alt="bukti pembayaran">
+                            </a>
+                        </td>
+                        <td>{{order.product.name}}</td>
+                        <td>{{order.pieces}}</td>
+                        <td>{{order.address}}</td>
+                        <td>{{order.ordered_on}}</td>
+                        <td>{{(order.pieces*order.product.price)|rupiah}}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
