@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    {% if current_user.is_authenticated and current_user.type == "member" %}
-        <title>TokoSaya - Welcome, {{current_user.real_name}}</title>
+    {% if current_user.is_authenticated and session.get("is_member") %}
+        <title>TokoSaya - Welcome, {{current_user.user_name}}</title>
     {% else %}
         <title>TokoSaya</title>
     {% endif %}
@@ -50,7 +50,6 @@
                       <a href="{{url_for('order.order_unpaid')}}" class="dropdown-item">Belum Lunas</a>
                     </div>
                 </div>
-                <a href="#" class="nav-item nav-link">User  </a>
               {% endif %}
                 <!-- this contact is static data -->
                 <a href="#" data-toggle="modal" data-target="#aboutModal" class="nav-item nav-link">Kontak</a>
@@ -108,12 +107,63 @@
     		</form>
     		<div class="navbar-nav ml-auto action-buttons">
             {% if current_user.is_authenticated and session.get("is_member") %}
+                {% if current_user.verified %}
+                    <div class="nav-item mr-1">
+                        <a href="#" class="nav-link mr-4" data-toggle="modal" data-target="#memberSetting">Member Setting</a>
+                    </div>
+                {% endif %}
                 <div class="nav-item">
                     <a href="{{url_for('auth.logout_member')}}" class="nav-link btn btn-warning sign-up-btn text-white">Logout</a>
                 </div>
+                <div class="modal fade" id="memberSetting" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Member Setting</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="{{url_for('index.member_setting')}}" method="POST">
+                                    <div class="form-group">
+                                        <label for="member-real-name" class="col-form-label">Nama:</label>
+                                        <input type="text" class="form-control" name="real_name" placeholder="realname" value="{{current_user.real_name}}" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="member-user-name" class="col-form-label">User Name:</label>
+                                        <input type="text" class="form-control" name="user_name" placeholder="username" value="{{current_user.user_name}}" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="member-email" class="col-form-label">Email:</label>
+                                        <input type="text" class="form-control" name="email" placeholder="email address" value="{{current_user.email}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="member-phone" class="col-form-label">Phone:</label>
+                                        <input type="text" class="form-control" name="phone" placeholder="number phone" value="{{current_user.phone}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="member-pass-word" class="col-form-label">Password Lama:</label>
+                                        <input type="password" class="form-control" name="old_password" placeholder="password lama">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="member-pass-word" class="col-form-label">Password Baru:</label>
+                                        <input type="password" class="form-control" name="new_password" placeholder="password baru">
+                                    </div>
+                                    <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+                                    <input type="submit" name="submit" style="display: none;" id="submitSetting">
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" onclick="document.getElementById('submitSetting').click()">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             {% else  %}
                 <div class="nav-item">
-                    <a href="{{url_for('auth.login_member')}}" class="nav-link dropdown-toggle mr-4">Login</a>
+                    <a href="{{url_for('auth.login_member')}}" class="nav-link mr-4">Login</a>
                 </div>
                 <div class="nav-item">
                     <a href="{{url_for('auth.register_member')}}" class="btn btn-warning dropdown-toggle sign-up-btn">Register</a>

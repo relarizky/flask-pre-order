@@ -1,7 +1,7 @@
 # Author    : Relarizky
 # Github    : https://github.com/relarizky
 # File Name : controller/index/index.py
-# Last Modified  : 02/07/21, 14:53 PM
+# Last Modified  : 02/10/21, 17:03 PM
 # Copyright © Relarizky 2021
 
 
@@ -71,6 +71,43 @@ def category(id: str):
         category=id,
         products=products
     )
+
+
+@index_bp.route("/member/edit", methods=["POST"])
+@login_required
+@member_required
+@verified_required
+def member_setting():
+    """
+    represents member setting page
+    """
+
+    real_name = request.form.get("real_name")
+    user_name = request.form.get("user_name")
+    email = request.form.get("email")
+    phone = request.form.get("phone")
+    old_password = request.form.get("old_password", "")
+    new_password = request.form.get("new_password", "")
+
+    try:
+        current_user.set_real_name(real_name)
+        current_user.set_user_name(user_name)
+        current_user.set_phone_number(phone)
+        current_user.set_email_address(email)
+
+        if old_password != "" and new_password != "":
+            if current_user.check_password(old_password):
+                current_user.set_pass_word(new_password)
+            else:
+                raise Exception("password lama tidak benar")
+
+        current_user.save()
+    except Exception as Error:
+        flash("error", Error.__str__())
+    else:
+        flash("success", "berhasil update profile")
+
+    return redirect(url_for("index.index"))
 
 
 @index_bp.route("/unverified")
