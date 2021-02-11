@@ -6,7 +6,7 @@
 
 
 from flask import render_template, url_for, redirect, flash, request
-from flask_login import login_required, current_user
+from flask_login import login_required
 from help.app.auth import admin_required
 from help.app.blueprint import NestedBlueprint
 from controller.dashboard.dashboard import dashboard_bp
@@ -18,6 +18,7 @@ dashboard_account_bp = NestedBlueprint(
     dashboard_bp,
     "/account"
 )
+
 
 @dashboard_account_bp.route("/admin")
 @login_required

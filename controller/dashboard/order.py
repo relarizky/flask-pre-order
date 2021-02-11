@@ -73,7 +73,7 @@ def order_paid_pdf():
             ),
             DIR + FILE
         )
-    except Exception as Error:
+    except Exception:
         flash("error", "terjadi kesalahan saat membuat file pdf")
         return redirect(url_for("dashboard.order_paid"))
     else:

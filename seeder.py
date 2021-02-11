@@ -28,8 +28,9 @@ def add_default_admin(credentials: list) -> None:
     add default admin into database
     """
 
-    admin = Admin(credentials[0],credentials[1],credentials[2])
-    admin.save()
+    with apps.app_context():
+        admin = Admin(credentials[0], credentials[1], credentials[2])
+        admin.save()
 
 
 for admin in admin_list:

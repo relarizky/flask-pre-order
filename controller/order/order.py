@@ -7,10 +7,8 @@
 
 from flask import Blueprint, render_template, request, flash, url_for, redirect
 from flask_login import current_user, login_required
-from help.token import create_token, confirm_token
-from help.app.auth import verified_required, member_required, token_required
-from help.app.email import EmailConfirmation
-from app.model import Order, Product
+from help.app.auth import verified_required, member_required
+from app.model import Order
 
 
 order_bp = Blueprint(
@@ -112,6 +110,7 @@ def order_edit(id: str):
         flash("success", "sukses mengubah info pemesanan")
 
     return redirect(url_for("order.order_unpaid"))
+
 
 @order_bp.route("/delete/<id>")
 @login_required

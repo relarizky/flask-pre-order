@@ -5,7 +5,6 @@
 # Copyright © Relarizky 2021
 
 
-from app import api
 from app.model import Category
 from flask_restful import Resource
 

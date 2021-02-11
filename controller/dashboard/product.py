@@ -6,7 +6,7 @@
 
 
 from flask import render_template, url_for, redirect, flash, request
-from flask_login import login_required, current_user
+from flask_login import login_required
 from help.app.auth import admin_required
 from help.app.blueprint import NestedBlueprint
 from controller.dashboard.dashboard import dashboard_bp
@@ -95,6 +95,7 @@ def product_edit(id: str):
         flash("success", "sukses update produk")
 
     return redirect(url_for("dashboard.product"))
+
 
 @dashboard_product_bp.route("/delete/<id>")
 @login_required
