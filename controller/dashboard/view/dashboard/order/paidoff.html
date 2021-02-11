@@ -1,0 +1,115 @@
+{% extends 'dashboard.html' %}
+
+{% block header %}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">
+      <a href="{{url_for('dashboard.order_paid_pdf')}}" class="btn btn-sm btn-info">
+        <i class="fa fa-download"> GENERATE PDF </i>
+      </a>
+    </h1>
+</div>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="card shadow mt-3">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary float-left">
+          SUDAH LUNAS <i class="fa fa-check text-success"></i>
+        </h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="fieldTable" width="100%" cellspacing="0">
+                <thead class="text-center">
+                    <tr>
+                        <th> BUKTI PEMBAYARAN </th>
+                        <th> PEMESAN </th>
+                        <th> PRODUK </th>
+                        <th> JUMLAH </th>
+                        <th> ALAMAT </th>
+                        <th> TANGGAL </th>
+                        <th> HARGA </th>
+                        <th> ACTION </th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                {% for order in order_list %}
+                    <tr>
+                        <td>
+                            <a href="{{order.payment_proof|proof_pict}}" data-toggle="lightbox">
+                                <img src="{{order.payment_proof|proof_pict}}" style="height:125px; width:100%;" class="rounded" alt="bukti pembayaran">
+                            </a>
+                        </td>
+                        <td>{{order.member.real_name|pascal_case}}</td>
+                        <td>{{order.product.name}}</td>
+                        <td>{{order.pieces}}</td>
+                        <td>{{order.address}}</td>
+                        <td>{{order.ordered_on}}</td>
+                        <td>{{(order.pieces*order.product.price)|rupiah}}</td>
+                        <td>
+                          <a href="#" data-toggle="modal" data-target="#editOrder{{order.id}}" class="btn btn-warning btn-sm btn-circle text-white" title="edit info pemesanan">
+                              <i class="fa fa-edit"></i>
+                          </a>
+                          <a data-toggle="modal" data-target="#deleteOrder{{order.id}}" class="btn btn-danger btn-sm btn-circle text-white" title="delete pemesanan">
+                              <i class="fa fa-trash"></i>
+                          </a>
+                          <div class="modal fade" id="editOrder{{order.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered">
+                                  <div class="modal-content" >
+                                      <div class="modal-header">
+                                          <h5 class="modal-title" id="staticBackdropLabel">Edit Status Pemesanan</h5>
+                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                              <span aria-hidden="true">&times;</span>
+                                          </button>
+                                      </div>
+                                      <div class="modal-body">
+                                          <form class="user text-left" action="{{url_for('dashboard.order_edit', id=order.id)}}" method="POST" enctype="multipart/form-data">
+                                              <div class="form-group">
+                                                <label for="address" class="col-form-label">Status Pemesanan : </label>
+                                                <select name="status" class="form-control">
+                                                    <option value="1">Lunas</option>
+                                                    <option value="">Belum Lunas</option>
+                                                </select>
+                                              </div>
+                                              <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+                                              <input type="submit" name="submit" id="submit{{order.id}}" style="display:none;">
+                                          </form>
+                                      </div>
+                                      <div class="modal-footer">
+                                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                          <button type="button" class="btn btn-info" onclick="document.getElementById('submit{{order.id}}').click()">Submit</button>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="modal fade" id="deleteOrder{{order.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                              aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document">
+                                  <div class="modal-content">
+                                      <div class="modal-header">
+                                          <h5 class="modal-title" id="exampleModalLabel">Apakah anda benar-benar ingin menghapus pemesanan ini?</h5>
+                                          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                              <span aria-hidden="true">×</span>
+                                          </button>
+                                      </div>
+                                      <div class="modal-body">Tekan tombol "Sure" untuk menghapus pemesanan ini.</div>
+                                      <div class="modal-footer">
+                                          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                          <a class="btn btn-info" href="{{url_for('dashboard.order_delete', id=order.id)}}">Sure</a>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

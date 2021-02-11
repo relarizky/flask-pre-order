@@ -1,7 +1,7 @@
 # Author    : Relarizky
 # Github    : https://github.com/relarizky
 # File Name : help/app/email.py
-# Last Modified  : 01/30/21, 14:00 PM
+# Last Modified  : 02/11/21, 23:46 PM
 # Copyright © Relarizky 2021
 
 
@@ -20,9 +20,23 @@ class EmailConfirmation:
         self.receiver = receiver
 
     @classmethod
+    def order_confirmation(cls, receiver: str, product_name: str):
+        """
+        send order confirmation email
+        """
+
+        email_subject = "order confirmation"
+        email_message = f"""
+        Terima kasih telah order {product_name}, pembayaran sudah lunas.
+        \n\nPesanan akan segera datang, tunggu ya..
+        """.strip()
+
+        return cls(receiver, email_subject, email_message)
+
+    @classmethod
     def register_confirmation(cls, receiver: str, url: str):
         """
-        send register confirmation
+        send register confirmation email
         """
 
         email_subject = "register confirmation"
@@ -37,7 +51,7 @@ class EmailConfirmation:
     @classmethod
     def forgot_password_confirmation(cls, receiver: str, url: str):
         """
-        send forgot password confirmation
+        send forgot password confirmation email
         """
 
         email_subject = "forgot password confirmation"

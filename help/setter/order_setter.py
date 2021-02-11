@@ -1,7 +1,7 @@
 # Author    : Relarizky
 # Github    : https://github.com/relarizky
 # File Name : help/setter/order_setter.py
-# Last Modified  : 02/09/21, 22:37 PM
+# Last Modified  : 02/11/21, 23:46 PM
 # Copyright © Relarizky 2021
 
 
@@ -33,12 +33,12 @@ class OrderSetter(FileUploader):
 
         self.address = address
 
-    def set_paid_off(self, paid_off: bool) -> None:
+    def set_paid_off(self, paid_off: str) -> None:
         """
         set paid off
         """
 
-        self.paid_off = paid_off
+        self.paid_off = bool(paid_off)
 
     def set_payment_proof(self, picture: FileStorage) -> None:
         """

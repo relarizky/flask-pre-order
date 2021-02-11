@@ -1,7 +1,7 @@
 # Author    : Relarizky
 # Github    : https://github.com/relarizky
 # File Name : controller/order/order.py
-# Last Modified  : 02/09/21, 22:37 PM
+# Last Modified  : 02/11/21, 23:46 PM
 # Copyright © Relarizky 2021
 
 
@@ -94,7 +94,7 @@ def order_edit(id: str):
     order = Order.query.get(id)
 
     if order is None:
-        flash("error", "produk tidak ditemukan")
+        flash("error", "pemesanan tidak ditemukan")
         return redirect(url_for("index.index"))
 
     proof = request.files.get("proof")
