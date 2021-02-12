@@ -114,7 +114,6 @@ def order_edit(id: str):
 
     try:
         if bool(status) is True:
-            print("ngnetot")
             email = EmailConfirmation.order_confirmation(
                 order.member.email,
                 order.product.name
