@@ -10,4 +10,4 @@ before_install:
         - export JWT_SECRET_KEY=fuckyou
 
 script: 
-        - python3 run.py
+        - python3 run.py &
