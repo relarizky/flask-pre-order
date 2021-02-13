@@ -23,9 +23,9 @@
   - Generate PDF as report
           
 
-# Installation
+## Installation
 
-## MySQL 
+### MySQL 
 ```
 $ git clone https://github.com/relarizky/flask-pre-order.git
 $ cd flask-pre-order
@@ -44,7 +44,7 @@ $ python seeder.py
 $ python run.py
 ```
 
-## SQLite
+### SQLite
 ```
 $ git clone https://github.com/relarizky/flask-pre-order.git
 $ cd flask-pre-order
