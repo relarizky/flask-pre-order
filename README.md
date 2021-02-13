@@ -14,6 +14,13 @@
           width=20% height=15%> <img src='https://raw.githubusercontent.com/relarizky/flask-pre-order/master/screenshot/6.png' 
           width=20% height=15%> <img src='https://raw.githubusercontent.com/relarizky/flask-pre-order/master/screenshot/7.png' 
           width=20% height=15%>
+
+
+## Features
+
+  - Multiple User with different login page
+  - Email Confirmation and Notification
+  - Generate PDF as report
           
 
 # Installation
