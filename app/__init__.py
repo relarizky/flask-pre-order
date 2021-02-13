@@ -1,10 +1,11 @@
 # Author    : Relarizky
 # Github    : https://github.com/relarizky
 # File Name : app/__init__.py
-# Last Modified  : 02/06/21, 13:21 PM
+# Last Modified  : 02/13/21, 21:18 PM
 # Copyright © Relarizky 2021
 
 
+import pymysql
 from flask import Flask
 from flask_wtf.csrf import CSRFProtect
 from flask_mail import Mail
@@ -20,6 +21,7 @@ apps.config.from_pyfile("configuration.py")
 
 
 # create additional library instance
+pymysql.install_as_MySQLdb()
 api = Api(apps, prefix="/api")
 sql = SQLAlchemy(apps)
 mail = Mail(apps)
