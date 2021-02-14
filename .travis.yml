@@ -7,7 +7,7 @@ before_install:
         - export SECRET_KEY=preorder2021
         - export FLASK_DBMS=sqlite
         - export FILE_NAME=database.sql
-        - export JWT_SECRET_KEY=fuckyou
+        - export JWT_SECRET_KEY=test
 
 script: 
         - python3 run.py &
